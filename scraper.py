@@ -4,11 +4,10 @@ import csv # for writing to CSV
 import time # for adding delay between requests
 import re # for cleaning price text
 
-# Approx conversion rate (you can update this anytime)
+# Approx conversion rate GBP to EUR
 GBP_TO_EUR = 1.17
 
-# Convert rating text to number
-def get_rating(star_class):
+def get_rating(star_class): # Convert star rating from class name to int
     ratings = {
         "One": 1,
         "Two": 2,
@@ -26,10 +25,9 @@ with open("books.csv", "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["Title", "Price (£)", "Price (€)", "Rating"])
 
-    # Loop through pages
-    for page in range(1, 6):  # adjust as needed
-        url = base_url.format(page)
-        print(f"Scraping page {page}...")
+    for page in range(1, 51):  # range of pages to loop through
+        url = base_url.format(page) # Construct Base URL for current page
+        print(f"Scraping page {page}...") #show progress
 
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "html.parser")
