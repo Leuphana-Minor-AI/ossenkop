@@ -14,3 +14,5 @@ Used a kaggle dataset with information about trips taken by yellow cabs in New Y
 This includes fields capturing pick-up and drop-off dates/times, pick-up and drop-off locations, trip distances, itemized fares, rate types, payment types, and driver-reported passenger counts.
 https://www.kaggle.com/datasets/nagasai524/nyc-taxi-trip-records-from-jan-2023-to-jun-2023
 The dataset was transformed into an hourly aggregated time series. At first I did not sample the data causing the TSFRESH to freeze and crashing my computer. In the fixed version it uses only n=50.000 observations. TSFRESH was used to extract 4,698 statistical and time-based features such as trends and autocorrelations saved in tsfresh_features.csv. Pylance thinks it is missing an import but if it works don't touch it.
+There are a lot of features, that were created that are totally irrelevant for me, but it still definitely saved me some time.
+If done manually, I would likely have created only basic features such as averages. However, the quality of the features is mixed: some are really good but others need to be checked before used in modeling.
