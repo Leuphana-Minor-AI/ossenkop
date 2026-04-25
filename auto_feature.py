@@ -1,4 +1,4 @@
-import pandas as pd
+import pandas as pd 
 from tsfresh import extract_features
 from tsfresh.utilities.dataframe_functions import impute
 
@@ -13,7 +13,7 @@ def main():
     )
 
     # SPEED FIX
-    df = df.sample(n=50000, random_state=42)
+    df = df.sample(n=50000, random_state=42) 
 
     # ==============================
     # DATETIME
