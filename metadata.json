@@ -2,26 +2,21 @@
     "dataset_name": "CSRD ESG Operational Metrics - Heidelberg Site A",
     "description": "Hourly environmental performance data including energy consumption, Scope 1 emissions, water usage, and waste generation for CSRD reporting compliance.",
     "collection_date": "2026-04-01",
-    "sensor_type": "IoT Smart Meter + Environmental Sensors",
-    "location": "Heidelberg Site A, Baden-W\u00fcrttemberg, Germany",
+    "location": "Heidelberg Site A, Baden-Württemberg, Germany",
     "sampling_rate": "1 hour",
     "units": {
         "energy_kwh": "kWh",
-        "scope1_emissions_kgco2e": "kg CO2e",
+        "scope1_emissions_kgco2e": "kg",
         "water_liters": "liters",
         "waste_kg": "kg"
     },
     "file_format": "csv",
-    "license": "CC BY 4.0",
-    "contributors": [
-        "ESG Data Team"
-    ],
-    "usage_rights": "For academic, research, and CSRD reporting training purposes",
+    "contributors":
+        "ESG Data Team",
     "standards_alignment": [
-        "CSRD",
         "ESRS E1 Climate Change",
         "ESRS E2 Pollution"
     ],
-    "notes": "Synthetic dataset generated for training purposes. Not real operational data.",
+    "notes": "dataset generated for training purposes",
     "related_file": "csrd_esg_dataset.csv"
 }

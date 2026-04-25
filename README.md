@@ -1,1 +1,2 @@
 # My first repository
+Generated a simple ESG Data Set using AI to learn how to create Metadata and how those can be relevant to add context when training a model. Dataset includes Hourly environmental performance data including energy consumption, Scope 1 emissions, water usage, and waste generation for CSRD reporting compliance.
