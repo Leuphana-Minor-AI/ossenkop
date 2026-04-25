@@ -1,11 +1,14 @@
-import requests # to make HTTP requests
-from bs4 import BeautifulSoup # to parse HTML content
-import csv # to write data to CSV
-import time # to add delay between requests
+import requests # for making HTTP requests
+from bs4 import BeautifulSoup # for parsing HTML
+import csv # for writing to CSV
+import time # for adding delay between requests
+import re # for cleaning price text
 
-GBP_TO_EUR = 1.17  #approximate conversion rate
+# Approx conversion rate (you can update this anytime)
+GBP_TO_EUR = 1.17
 
-def get_rating(star_class):    #convert star rating from class name to int
+# Convert rating text to number
+def get_rating(star_class):
     ratings = {
         "One": 1,
         "Two": 2,
@@ -15,41 +18,43 @@ def get_rating(star_class):    #convert star rating from class name to int
     }
     return ratings.get(star_class, 0)
 
-base_url = "http://books.toscrape.com/catalogue/page-{}.html" #base url with placeholder for different pages
+# Base URL for pagination
+base_url = "http://books.toscrape.com/catalogue/page-{}.html"
 
-# Open CSV file
+# Create CSV file
 with open("books.csv", "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Title", "Price (£)", "Price (€)", "Rating"]) #defines header fow for csv
+    writer.writerow(["Title", "Price (£)", "Price (€)", "Rating"])
 
     # Loop through pages
-    for page in range(1, 51):  #range of pages to scrape
-        url = base_url.format(page) #format the base url with the current page number
-        print(f"Scraping page {page}...") #shows progress in terminal
+    for page in range(1, 6):  # adjust as needed
+        url = base_url.format(page)
+        print(f"Scraping page {page}...")
 
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "html.parser")
 
-        books = soup.find_all("article", class_="product_pod") #finds all book entries on the page
+        books = soup.find_all("article", class_="product_pod")
 
-        for book in books: #extracts data for each book
+        for book in books: # Extract data for each book
             # Title
             title = book.h3.a["title"]
 
-            # Price in pounds (remove £ symbol)
+            # Price (FIXED encoding-safe version)
             price_text = book.find("p", class_="price_color").text
-            price_gbp = float(price_text.replace("£", ""))
+            price_clean = re.sub(r"[^\d.]", "", price_text)  # keeps only numbers + dot
+            price_gbp = float(price_clean)
 
-            # Convert to euros
+            # Convert to EUR
             price_eur = round(price_gbp * GBP_TO_EUR, 2)
 
-            # Rating (stored as class like "star-rating Three")
+            # Rating
             rating_class = book.find("p", class_="star-rating")["class"][1]
             rating = get_rating(rating_class)
 
-            # Write to CSV
-            writer.writerow([title, price_gbp, price_eur, rating])
+            # Save to CSV
+            writer.writerow([title, price_gbp, price_eur, rating]) 
 
-        time.sleep(1)  # add delay to avoid overwhelming the server
+        time.sleep(1)  # avoid overwhelming the server
 
 print("Complete")
